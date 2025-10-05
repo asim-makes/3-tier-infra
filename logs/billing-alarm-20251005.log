@@ -1,0 +1,13 @@
+2025-10-05 09:35:30 --------------------------------------------------------
+2025-10-05 09:35:30 STARTING SCRIPT: AWS Billing Alarm Setup
+2025-10-05 09:35:30 Region: us-east-1 | Target Alarm: Billing-Immediate-Alert-us-east-1
+2025-10-05 09:35:30 1. Checking for existing alarm: Billing-Immediate-Alert-us-east-1...
+2025-10-05 09:35:33 Alarm not found. Proceeding with creation.
+2025-10-05 09:35:33 2. Checking for enabled EstimatedCharges billing metric...
+2025-10-05 09:35:35 Billing metric is enabled.
+2025-10-05 09:35:35 3. Searching for SNS Topic: CDK-Buffer...
+2025-10-05 09:35:38 Found Topic ARN: arn:aws:sns:us-east-1:1234567891011:CDK-Buffer
+2025-10-05 09:35:38 4. Creating CloudWatch Metric Alarm: Billing-Immediate-Alert-us-east-1 (Threshold: $1.00)...
+2025-10-05 09:35:40 SUCCESS: Alarm Billing-Immediate-Alert-us-east-1 created/updated successfully.
+2025-10-05 09:35:40    Notification will be sent to CDK-Buffer when charges exceed $1.00 USD.
+2025-10-05 09:35:40 --------------------------------------------------------

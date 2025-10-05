@@ -1,0 +1,19 @@
+[2025-10-05 19:57:24] [--------------------------------------------------------] 
+[2025-10-05 19:57:24] [STARTING SCRIPT: AWS IAM User Setup for 3-tier-infra-user] 
+[2025-10-05 19:57:24] [--------------------------------------------------------] 
+[2025-10-05 19:57:24] [INFO] Retrieving AWS Account ID...
+[2025-10-05 19:57:26] [INFO] AWS Account ID: 1234567891011
+[2025-10-05 19:57:26] [INFO] Checking if IAM user '3-tier-infra-user' exists...
+[2025-10-05 19:57:29] [WARN] User '3-tier-infra-user' already exists. Skipping user creation.
+[2025-10-05 19:57:29] [INFO] Checking if policy '3-tier-deployment-policy' already exists...
+[2025-10-05 19:57:31] [SUCCESS] Policy '3-tier-deployment-policy' already exists. ARN: arn:aws:iam::1234567891011:policy/3-tier-deployment-policy
+[2025-10-05 19:57:31] [INFO] Attempting to attach policy to user '3-tier-infra-user'...
+[2025-10-05 19:57:36] [SUCCESS] Policy '3-tier-deployment-policy' successfully attached to user '3-tier-infra-user'.
+[2025-10-05 19:57:36] [INFO] Creating new access key for user '3-tier-infra-user'...
+[2025-10-05 19:57:39] [INFO] Storing credentials in local AWS CLI profile '3-tier-infra-user-profile'...
+[2025-10-05 19:57:41] [SUCCESS] Credentials successfully stored in local CLI profile: '3-tier-infra-user-profile'
+[2025-10-05 19:57:41] [INFO] Saving raw credentials to file: creds/3-tier-infra-user-credentials.json
+[2025-10-05 19:57:41] [SUCCESS] Raw credentials saved to creds/3-tier-infra-user-credentials.json. File permissions set to 600.
+[2025-10-05 19:57:41] [--------------------------------------------------------] 
+[2025-10-05 19:57:41] [SCRIPT COMPLETED.] 
+[2025-10-05 19:57:41] [--------------------------------------------------------] 
