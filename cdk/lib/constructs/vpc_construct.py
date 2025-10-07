@@ -6,7 +6,7 @@ from aws_cdk import (
 from constructs import Construct
 
 class VpcConstruct(Construct):
-    def __init__(self, scope: Construct, id: str, *, vpc_name: str, vpc_cidr: str, audit_bucket_name: str):
+    def __init__(self, scope: Construct, id: str, *, vpc_name: str, vpc_cidr: str, audit_bucket_name: str) -> None:
         super().__init__(scope, id)
 
         # Import or create the S3 bucket for audit logs

@@ -1,6 +1,6 @@
 from aws_cdk import Stack
 from constructs import Construct
-from cdk_deploy.core_infra.vpc_construct import VpcConstruct
+from lib.constructs.vpc_construct import VpcConstruct
 
 class NetworkStack(Stack):
     def __init__(self, scope: Construct, id: str, **kwargs):
