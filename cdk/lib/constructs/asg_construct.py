@@ -2,11 +2,13 @@ from aws_cdk import (
     aws_ec2 as ec2,
     aws_autoscaling as autoscaling,
     aws_iam as iam,
+    core,
+    aws_elasticloadbalancingv2 as elbv2,
 )
 from constructs import Construct
 
 class AsgConstruct(Construct):
-    def __init__(self, scope:Construct, id:str, vpc:ec2.Vpc, alb_sg: ec2.SecurityGroup, db_sg: ec2.SecurityGroup, user_data:str, **kwargs) -> None:
+    def __init__(self, scope:Construct, id:str, vpc:ec2.Vpc, alb_sg: ec2.SecurityGroup, db_sg: ec2.SecurityGroup, app_target_group: elbv2.ApplicationTargetGroup, user_data:str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
         # Define IAM role and permissions
@@ -65,54 +67,27 @@ class AsgConstruct(Construct):
         amzn_linux = ec2.MachineImage.latest_amazon_linux2()
         instance_type = ec2.InstanceType("t3.micro")
 
-        subnets_az1 = vpc.select_subnets(
-                subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS,
-                availability_zones=[vpc.availability_zones[0]]
+        all_private_subnets = vpc.select_subnets(
+            subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS
         )
 
-        subnets_az2 = vpc.select_subnets(
-                subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS,
-                availability_zones=[vpc.availability_zones[1]]
+        self.asg = autoscaling.AutoScalingGroup(
+            self,
+            "ApplicationAutoScalingGroup",
+            instance_type=instance_type,
+            machine_image=amzn_linux,
+            role=instance_role,
+            security_groups=[self.asg_sg],
+            vpc_subnets=all_private_subnets,
+            min_capacity=1,
+            max_capacity=2,
+            user_data=ec2.UserData.custom(user_data),
+            health_check=autoscaling.HealthCheck.elb(grace=core.Duration.minutes(5))
         )
 
-        asg_az1 = autoscaling.AutoScalingGroup(
-                self,
-                "ASG_AZ1",
-                instance_type=instance_type,
-                machine_image=amzn_linux,
-                role=instance_role,
-                security_groups=[self.asg_sg],
-                vpc_subnets=subnets_az1,
-                min_capacity=1,
-                max_capacity=2,
-                **user_data=user_data**,
-                **health_check=autoscaling.HealthCheck.elb(grace=core.Duration.minutes(5))**
-        )
-
-        asg_az1.scale_on_cpu_utilization(
+        self.asg.scale_on_cpu_utilization(
             "TargetTrackingCPU",
             target_utilization_percent=60
         )
 
-        asg_az1.attach_to_application_target_group(app_target_group)
-
-        asg_az2 = autoscaling.AutoScalingGroup(
-                self,
-                "ASG_AZ2",
-                isntance_type=instance_type,
-                machine_image=amzn_linux,
-                role=instance_role,
-                security_groups=[self.asg_sg],
-                vpc_subnets=subnets_az2,
-                min_capacity=1,
-                max_capacity=2,
-                **user_data=user_data**,
-                **health_check=autoscaling.HealthCheck.elb(grace=core.Duration.minutes(5))**
-        )
-
-        asg_az2.scale_on_cpu_utilization(
-            "TargetTrackingCPU",
-            target_utilization_percent=60
-        )
-
-        asg_az2.attach_to_application_target_group(app_target_group)
+        self.asg.attach_to_application_target_group(app_target_group)
