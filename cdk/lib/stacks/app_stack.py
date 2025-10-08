@@ -3,6 +3,7 @@ from constructs import Construct
 from aws_cdk import aws_ec2 as ec2, aws_ssm as ssm
 from lib.constructs.vpc_construct import VpcConstruct
 from lib.stacks.network_stack import NetworkStack
+from lib.stacks.web_stack import WebStack
 
 
 class AppStack(Stack):
@@ -10,6 +11,8 @@ class AppStack(Stack):
         super().__init__(scope, id, **kwargs)
 
         self.vpc: ec2.vpc = network_stack.vpc
+
+        app_target_group = web_stack.alb_resources._application_target_group
 
         self.alb_sg = ec2.SecurityGroup(
             self, "AlbSecurityGroup",
@@ -82,5 +85,6 @@ class AppStack(Stack):
             vpc=self.vpc,
             alb_sg=self.alb_sg,
             database_sg=self.db_sg,
-            user_data=user_data
+            user_data=user_data,
+            application_target_group=app_target_group
         )
