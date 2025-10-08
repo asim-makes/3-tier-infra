@@ -2,13 +2,18 @@ from aws_cdk import (
     aws_ec2 as ec2,
     aws_autoscaling as autoscaling,
     aws_iam as iam,
-    core,
+    Duration,
     aws_elasticloadbalancingv2 as elbv2,
 )
 from constructs import Construct
 
 class AsgConstruct(Construct):
-    def __init__(self, scope:Construct, id:str, vpc:ec2.Vpc, alb_sg: ec2.SecurityGroup, db_sg: ec2.SecurityGroup, app_target_group: elbv2.ApplicationTargetGroup, user_data:str, **kwargs) -> None:
+
+    @property
+    def auto_scaling_group(self) -> autoscaling.AutoScalingGroup:
+        return self._asg
+    
+    def __init__(self, scope:Construct, id:str, vpc:ec2.Vpc, alb_sg: ec2.SecurityGroup, db_sg: ec2.SecurityGroup, user_data:str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
         # Define IAM role and permissions
@@ -71,7 +76,7 @@ class AsgConstruct(Construct):
             subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS
         )
 
-        self.asg = autoscaling.AutoScalingGroup(
+        self._asg = autoscaling.AutoScalingGroup(
             self,
             "ApplicationAutoScalingGroup",
             instance_type=instance_type,
@@ -82,12 +87,10 @@ class AsgConstruct(Construct):
             min_capacity=1,
             max_capacity=2,
             user_data=ec2.UserData.custom(user_data),
-            health_check=autoscaling.HealthCheck.elb(grace=core.Duration.minutes(5))
+            health_check=autoscaling.HealthCheck.elb(grace=Duration.minutes(5))
         )
 
         self.asg.scale_on_cpu_utilization(
             "TargetTrackingCPU",
             target_utilization_percent=60
         )
-
-        self.asg.attach_to_application_target_group(app_target_group)
