@@ -13,13 +13,13 @@ class AlbConstruct(Construct):
         return self._alb_security_group
     
     @property
-    def application_target_group(self) -> ec2.ApplicationTargetGroup:
+    def application_target_group(self) -> elbv2.ApplicationTargetGroup:
         return self._application_target_group
 
     def __init__(self, scope:Construct, id:str, vpc: ec2.IVpc, **kwargs):
         super().__init__(scope, id, **kwargs)
 
-        self._alb_security_group = ec2.SecuirtyGroup(
+        self._alb_security_group = ec2.SecurityGroup(
             self,
             "AlbSecurityGroup",
             vpc=vpc,
@@ -54,7 +54,7 @@ class AlbConstruct(Construct):
         self.listener = self.alb.listener(
             "HTTPListener",
             port=80,
-            default_target_group=[self._application_target_group]
+            default_target_groups=[self._application_target_group]
         )
 
         CfnOutput(

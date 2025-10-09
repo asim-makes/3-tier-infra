@@ -15,7 +15,7 @@ web_stack = WebStack(app, "WebStack", network_stack=network_stack)
 
 app_stack = AppStack(app,
                      "AppStack",
-                     network_stack=network_stack
+                     network_stack=network_stack,
                      web_stack=web_stack
                     )
 

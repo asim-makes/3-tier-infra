@@ -13,7 +13,7 @@ class AsgConstruct(Construct):
     def auto_scaling_group(self) -> autoscaling.AutoScalingGroup:
         return self._asg
     
-    def __init__(self, scope:Construct, id:str, vpc:ec2.Vpc, alb_sg: ec2.SecurityGroup, db_sg: ec2.SecurityGroup, app_target_group: elbv2.ApplicationTargetGroup, user_data:str, **kwargs) -> None:
+    def __init__(self, scope:Construct, id:str, vpc:ec2.Vpc, alb_sg: ec2.SecurityGroup, db_sg: ec2.SecurityGroup, app_target_group: elbv2.ApplicationTargetGroup, user_data:ec2.UserData, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
         # Define IAM role and permissions
@@ -86,12 +86,12 @@ class AsgConstruct(Construct):
             vpc_subnets=all_private_subnets,
             min_capacity=1,
             max_capacity=2,
-            user_data=ec2.UserData.custom(user_data),
+            user_data=user_data,
             health_check=autoscaling.HealthCheck.elb(grace=Duration.minutes(5)),
             target_groups=[app_target_group]
         )
 
-        self.asg.scale_on_cpu_utilization(
+        self._asg.scale_on_cpu_utilization(
             "TargetTrackingCPU",
             target_utilization_percent=60
         )

@@ -2,15 +2,16 @@ from aws_cdk import Stack
 from constructs import Construct
 from aws_cdk import aws_ec2 as ec2, aws_ssm as ssm
 from lib.constructs.vpc_construct import VpcConstruct
+from lib.constructs.asg_construct import AsgConstruct
 from lib.stacks.network_stack import NetworkStack
 from lib.stacks.web_stack import WebStack
 
 
 class AppStack(Stack):
-    def __init__(self, scope: Construct, id: str, network_stack: NetworkStack, **kwargs):
+    def __init__(self, scope: Construct, id: str, network_stack: NetworkStack, web_stack: WebStack, **kwargs):
         super().__init__(scope, id, **kwargs)
 
-        self.vpc: ec2.vpc = network_stack.vpc
+        self.vpc: ec2.Vpc = network_stack.vpc
 
         app_target_group = web_stack.alb_resources._application_target_group
 
@@ -66,7 +67,7 @@ class AppStack(Stack):
         }
         """
 
-        ssm.string_parameter(
+        ssm_param = ssm.StringParameter(
             self, "CloudWatchAgentConfig",
             parameter_name="/CloudWatchAgent/EC2/Config",
             string_value=agent_config_json
@@ -84,7 +85,7 @@ class AppStack(Stack):
             "AsgConstruct",
             vpc=self.vpc,
             alb_sg=self.alb_sg,
-            database_sg=self.db_sg,
+            db_sg=self.db_sg,
             user_data=user_data,
-            application_target_group=app_target_group
+            app_target_group=app_target_group
         )
