@@ -19,4 +19,7 @@ app_stack = AppStack(app,
                      web_stack=web_stack
                     )
 
+web_stack.add_dependency(network_stack)
+app_stack.add_dependency(network_stack)
+
 app.synth()

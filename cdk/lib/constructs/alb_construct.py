@@ -51,7 +51,7 @@ class AlbConstruct(Construct):
             target_type=elbv2.TargetType.INSTANCE
         )
 
-        self.listener = self.alb.listener(
+        self.listener = self.alb.add_listener(
             "HTTPListener",
             port=80,
             default_target_groups=[self._application_target_group]

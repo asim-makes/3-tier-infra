@@ -45,7 +45,7 @@ class AsgConstruct(Construct):
             "ASGSecurityGroup",
             vpc=vpc,
             description="Security Group for ASG in private subnets",
-            allow_all_outbound=True
+            allow_all_outbound=False
         )
 
         # Ingress and Outgress rules
@@ -79,17 +79,23 @@ class AsgConstruct(Construct):
         self._asg = autoscaling.AutoScalingGroup(
             self,
             "ApplicationAutoScalingGroup",
+            vpc=vpc,
             instance_type=instance_type,
             machine_image=amzn_linux,
             role=instance_role,
-            security_groups=[self.asg_sg],
-            vpc_subnets=all_private_subnets,
+            security_group=self.asg_sg,
+            vpc_subnets={
+                'subnet_type': ec2.SubnetType.PRIVATE_WITH_EGRESS
+            },
             min_capacity=1,
             max_capacity=2,
             user_data=user_data,
-            health_check=autoscaling.HealthCheck.elb(grace=Duration.minutes(5)),
-            target_groups=[app_target_group]
+            health_checks=autoscaling.HealthChecks.ec2(
+                grace_period=Duration.minutes(5) 
+            )
         )
+
+        self._asg.attach_to_application_target_group(app_target_group)
 
         self._asg.scale_on_cpu_utilization(
             "TargetTrackingCPU",
