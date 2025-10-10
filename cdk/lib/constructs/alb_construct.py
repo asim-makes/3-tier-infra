@@ -2,7 +2,8 @@ from aws_cdk import (
     aws_ec2 as ec2,
     aws_elasticloadbalancingv2 as elbv2,
     CfnOutput,
-    Stack
+    Stack,
+    Duration,
 )
 from constructs import Construct
 
@@ -38,7 +39,7 @@ class AlbConstruct(Construct):
             "ApplicationLoadBalancer",
             vpc=vpc,
             internet_facing=True,
-            security_group=self.alb_security_group,
+            security_group=self._alb_security_group,
             vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PUBLIC)
         )
 
@@ -48,7 +49,13 @@ class AlbConstruct(Construct):
             port=8080,
             vpc=vpc,
             protocol=elbv2.ApplicationProtocol.HTTP,
-            target_type=elbv2.TargetType.INSTANCE
+            target_type=elbv2.TargetType.INSTANCE,
+            health_check=elbv2.HealthCheck(
+                path="/",
+                interval=Duration.seconds(30),
+                healthy_threshold_count=2,
+                unhealthy_threshold_count=5
+            )
         )
 
         self.listener = self.alb.add_listener(

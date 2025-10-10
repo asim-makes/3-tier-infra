@@ -1,9 +1,11 @@
+from typing import Optional
 from aws_cdk import (
     aws_ec2 as ec2,
     aws_autoscaling as autoscaling,
-    aws_iam as iam,
-    Duration,
     aws_elasticloadbalancingv2 as elbv2,
+    aws_iam as iam,
+    aws_secretsmanager as secretsmanager,
+    Duration,
 )
 from constructs import Construct
 
@@ -13,7 +15,17 @@ class AsgConstruct(Construct):
     def auto_scaling_group(self) -> autoscaling.AutoScalingGroup:
         return self._asg
     
-    def __init__(self, scope:Construct, id:str, vpc:ec2.Vpc, alb_sg: ec2.SecurityGroup, db_sg: ec2.SecurityGroup, app_target_group: elbv2.ApplicationTargetGroup, user_data:ec2.UserData, **kwargs) -> None:
+    def __init__(self,
+                 scope:Construct,
+                 id:str,
+                 *,
+                 vpc:ec2.Vpc,
+                 alb_sg: ec2.SecurityGroup,
+                 app_target_group: elbv2.ApplicationTargetGroup,
+                 user_data:ec2.UserData,
+                 db_sg: Optional[ec2.ISecurityGroup] = None,
+                 rds_secret: Optional[secretsmanager.ISecret] = None,
+                 **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
         # Define IAM role and permissions
@@ -38,6 +50,10 @@ class AsgConstruct(Construct):
                 iam.ManagedPolicy.from_aws_managed_policy_name("CloudWatchLogsFullAccess")
         )
 
+        # Permission 4: Database Credentials
+        if rds_secret is not None:
+            rds_secret.grant_read(instance_role)
+
 
         # Create the security group
         self.asg_sg = ec2.SecurityGroup(
@@ -55,11 +71,12 @@ class AsgConstruct(Construct):
             description="Allow traffic from ALB on app port 8080"
         )
 
-        self.asg_sg.add_egress_rule(
-            peer=db_sg,
-            connection=ec2.Port.tcp(3306),
-            description="Allow connection to RDS"
-        )
+        if db_sg is not None:
+            self.asg_sg.add_egress_rule(
+                peer=db_sg,
+                connection=ec2.Port.tcp(5432),
+                description="Allow ASG to connect to RDS"
+            )
 
         self.asg_sg.add_egress_rule(
             peer=ec2.Peer.any_ipv4(),
@@ -91,7 +108,7 @@ class AsgConstruct(Construct):
             max_capacity=2,
             user_data=user_data,
             health_checks=autoscaling.HealthChecks.ec2(
-                grace_period=Duration.minutes(5) 
+                grace_period=Duration.minutes(5)
             )
         )
 

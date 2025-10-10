@@ -1,6 +1,8 @@
-from aws_cdk import Stack
+from aws_cdk import (
+    Stack,
+    aws_ec2 as ec2,
+    )
 from constructs import Construct
-from aws_cdk import aws_ec2 as ec2, aws_ssm as ssm
 from lib.constructs.alb_construct import AlbConstruct
 from lib.stacks.network_stack import NetworkStack
 
@@ -17,6 +19,7 @@ class WebStack(Stack):
             vpc=self.vpc
         )
 
-        self.alb_resources = self.alb_construct
+        self.alb_security_group = self.alb_construct.alb_security_group
+        self.app_target_group = self.alb_construct.application_target_group
 
 
