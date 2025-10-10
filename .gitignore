@@ -1,5 +1,6 @@
 # Created by venv; see https://docs.python.org/3/library/venv.html
 creds/
+.venv
 
 cdk/*.swp
 cdk/package-lock.json
@@ -11,5 +12,10 @@ cdk/*.egg-info
 # CDK asset staging directory
 cdk/.cdk.staging
 cdk/cdk.out
+cdk/cdk.context.json
 
 __pycache__/
+
+Lib/
+Scripts/
+pyvenv.cfg
