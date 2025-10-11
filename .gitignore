@@ -8,6 +8,7 @@ cdk/__pycache__
 cdk/.pytest_cache
 cdk/.venv
 cdk/*.egg-info
+cdk/lib/stacks/database_stack.py
 
 # CDK asset staging directory
 cdk/.cdk.staging
@@ -19,5 +20,3 @@ __pycache__/
 Lib/
 Scripts/
 pyvenv.cfg
-
-lib/stacks/database_stack.py
