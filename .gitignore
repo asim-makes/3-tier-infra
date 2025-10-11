@@ -19,3 +19,5 @@ __pycache__/
 Lib/
 Scripts/
 pyvenv.cfg
+
+lib/stacks/database_stack.py

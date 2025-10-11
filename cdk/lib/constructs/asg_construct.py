@@ -16,16 +16,16 @@ class AsgConstruct(Construct):
         return self._asg
     
     def __init__(self,
-                 scope:Construct,
-                 id:str,
-                 *,
-                 vpc:ec2.Vpc,
-                 alb_sg: ec2.SecurityGroup,
-                 app_target_group: elbv2.ApplicationTargetGroup,
-                 user_data:ec2.UserData,
-                 db_sg: Optional[ec2.ISecurityGroup] = None,
-                 rds_secret: Optional[secretsmanager.ISecret] = None,
-                 **kwargs) -> None:
+                scope:Construct,
+                id:str,
+                *,
+                vpc:ec2.Vpc,
+                alb_sg: ec2.SecurityGroup,
+                app_target_group: elbv2.ApplicationTargetGroup,
+                user_data:ec2.UserData,
+                db_sg: Optional[ec2.ISecurityGroup] = None,
+                rds_secret: Optional[secretsmanager.ISecret] = None,
+                **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
         # Define IAM role and permissions
@@ -53,7 +53,6 @@ class AsgConstruct(Construct):
         # Permission 4: Database Credentials
         if rds_secret is not None:
             rds_secret.grant_read(instance_role)
-
 
         # Create the security group
         self.asg_sg = ec2.SecurityGroup(
@@ -84,7 +83,6 @@ class AsgConstruct(Construct):
             description="Allow HTTPS outbound for updates and API calls via NAT Gateway"
         )
 
-
         # ASG section
         amzn_linux = ec2.MachineImage.latest_amazon_linux2()
         instance_type = ec2.InstanceType("t3.micro")
@@ -104,7 +102,7 @@ class AsgConstruct(Construct):
             vpc_subnets={
                 'subnet_type': ec2.SubnetType.PRIVATE_WITH_EGRESS
             },
-            min_capacity=1,
+            min_capacity=2,
             max_capacity=2,
             user_data=user_data,
             health_checks=autoscaling.HealthChecks.ec2(

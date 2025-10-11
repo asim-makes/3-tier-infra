@@ -26,12 +26,6 @@ class RdsConstruct(Construct):
             description="Security Group for RDS"
         )
 
-        # self._rds_security_group.add_ingress_rule(
-        #     peer=app_security_group,
-        #     connection=ec2.Port.tcp(5432),
-        #     description="Allow postgres (5432) connection from EC2 app servers."
-        # )
-
         credentials = rds.Credentials.from_generated_secret("postgresadmin")
 
         self.rds_instance = rds.DatabaseInstance(
@@ -44,7 +38,7 @@ class RdsConstruct(Construct):
             allocated_storage=20,
             multi_az=True,
             vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PRIVATE_ISOLATED),
-            # security_groups=[self._rds_security_group],
+            security_groups=[self._rds_security_group],
             publicly_accessible=False
         )
 

@@ -24,7 +24,7 @@ class AlbConstruct(Construct):
             self,
             "AlbSecurityGroup",
             vpc=vpc,
-            allow_all_outbound=True,
+            allow_all_outbound=False,
             description="Security Group for Application Load Balancer"
         )
 
