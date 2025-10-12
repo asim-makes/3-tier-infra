@@ -1,0 +1,10 @@
+2025-10-12 20:20:22 --------------------------------------------------------------------------------
+2025-10-12 20:20:22 STARTING SCRIPT: RDS DB Instance Inventory Check
+2025-10-12 20:20:22 Target Region: us-east-1
+2025-10-12 20:20:22 INFO: 'jq' found at: /usr/bin/jq
+2025-10-12 20:20:22 --- RDS DB Instance Inventory: us-east-1 ---
+2025-10-12 20:20:22 Fetching RDS instance data using describe-db-instances...
+2025-10-12 20:20:25 INFO: Found 1 RDS Instance(s).
+2025-10-12 20:20:25 INVENTORY: ID: appstack-rdsinstance6c916663-yieyweuwdwk4 | Engine: postgres | Size: db.t3.micro | Status: available | Multi-AZ: No
+2025-10-12 20:20:25 SCRIPT FINISHED.
+2025-10-12 20:20:25 --------------------------------------------------------------------------------

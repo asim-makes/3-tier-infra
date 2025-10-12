@@ -4,8 +4,8 @@
 REGION="us-east-1"
 TOPIC_NAME="CDK-Buffer"
 
-EC2_INSTANCE_ID="i-xxxxxxxxxxxxxxxxx"
-RDS_INSTANCE_ID="my-production-rds"
+EC2_INSTANCE_ID="i-01af26efe7ed5fa1b"
+RDS_INSTANCE_ID="appstack-rdsinstance6c916663-yieyweuwdwk4"
 
 # Alarm 1: EC2 High CPU Threshold
 ALARM_CPU_NAME="EC2-High-CPU-$REGION"

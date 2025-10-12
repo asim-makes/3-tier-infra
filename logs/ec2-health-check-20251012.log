@@ -1,0 +1,48 @@
+2025-10-12 20:19:25 --------------------------------------------------------------------------------
+2025-10-12 20:19:25 STARTING SCRIPT: EC2 Instance Inventory Check
+2025-10-12 20:19:25 ERROR: --region is required.
+2025-10-12 20:19:35 --------------------------------------------------------------------------------
+2025-10-12 20:19:35 STARTING SCRIPT: EC2 Instance Inventory Check
+2025-10-12 20:19:35 Target Region: us-east-1a
+2025-10-12 20:19:35 INFO: 'jq' found at: /usr/bin/jq
+2025-10-12 20:19:35 Defining AWS filters for running and stopped instances.
+2025-10-12 20:19:35 --- EC2 Instance Inventory: us-east-1a  ---
+2025-10-12 20:19:35 Fetching EC2 instance data using describe-instances...
+2025-10-12 20:19:38 SUCCESS: No instances found matching the criteria.
+2025-10-12 20:19:38 SCRIPT FINISHED.
+2025-10-12 20:19:38 --------------------------------------------------------------------------------
+2025-10-12 20:19:47 --------------------------------------------------------------------------------
+2025-10-12 20:19:47 STARTING SCRIPT: EC2 Instance Inventory Check
+2025-10-12 20:19:47 Target Region: us-east-1a
+2025-10-12 20:19:47 INFO: 'jq' found at: /usr/bin/jq
+2025-10-12 20:19:47 Defining AWS filters for running and stopped instances.
+2025-10-12 20:19:47 --- EC2 Instance Inventory: us-east-1a  ---
+2025-10-12 20:19:47 Fetching EC2 instance data using describe-instances...
+2025-10-12 20:19:49 SUCCESS: No instances found matching the criteria.
+2025-10-12 20:19:49 SCRIPT FINISHED.
+2025-10-12 20:19:49 --------------------------------------------------------------------------------
+2025-10-12 20:19:52 --------------------------------------------------------------------------------
+2025-10-12 20:19:52 STARTING SCRIPT: EC2 Instance Inventory Check
+2025-10-12 20:19:52 Target Region: us-east-1
+2025-10-12 20:19:52 INFO: 'jq' found at: /usr/bin/jq
+2025-10-12 20:19:52 Defining AWS filters for running and stopped instances.
+2025-10-12 20:19:52 --- EC2 Instance Inventory: us-east-1  ---
+2025-10-12 20:19:52 Fetching EC2 instance data using describe-instances...
+2025-10-12 20:19:55 INFO: Found 2 EC2 Instance(s).
+2025-10-12 20:19:55 INVENTORY: ID: i-01af26efe7ed5fa1b | Name: AppStack/AsgConstruct/ApplicationAutoScalingGroup | State: running | Type: t3.micro | Private IP: 192.168.38.50
+2025-10-12 20:19:55 INVENTORY: ID: i-0fb6b1711564367d5 | Name: AppStack/AsgConstruct/ApplicationAutoScalingGroup | State: running | Type: t3.micro | Private IP: 192.168.24.3
+2025-10-12 20:19:55 SCRIPT FINISHED.
+2025-10-12 20:19:55 --------------------------------------------------------------------------------
+2025-10-12 20:22:18 --------------------------------------------------------------------------------
+2025-10-12 20:22:18 STARTING SCRIPT: EC2 Instance Health Check
+2025-10-12 20:22:18 ERROR: --region is required.
+2025-10-12 20:22:25 --------------------------------------------------------------------------------
+2025-10-12 20:22:25 STARTING SCRIPT: EC2 Instance Health Check
+2025-10-12 20:22:25 Target Region: us-east-1
+2025-10-12 20:22:25 INFO: 'jq' found at: /usr/bin/jq
+2025-10-12 20:22:25 Defining AWS filters for running, potentially impaired instances.
+2025-10-12 20:22:25 --- Instance Health Check: us-east-1  ---
+2025-10-12 20:22:25 Fetching instance status reports...
+2025-10-12 20:22:29 SUCCESS: All monitored instances are reported as OK (or not applicable).
+2025-10-12 20:22:29 SCRIPT FINISHED.
+2025-10-12 20:22:29 --------------------------------------------------------------------------------

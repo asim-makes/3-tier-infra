@@ -1,0 +1,22 @@
+2025-10-12 20:23:45 --------------------------------------------------------
+2025-10-12 20:23:45 STARTING SCRIPT: EC2 and RDS Alarm Setup
+2025-10-12 20:23:45 Region: us-east-1 | Target Topic: CDK-Buffer
+2025-10-12 20:23:45 1. Searching for SNS Topic: CDK-Buffer...
+2025-10-12 20:23:47 SUCCESS: Found Topic ARN: arn:aws:sns:us-east-1:592894503318:CDK-Buffer
+2025-10-12 20:23:47 SKIP: EC2_INSTANCE_ID placeholder not updated. Skipping EC2 alarm setup.
+2025-10-12 20:23:47 SKIP: RDS_INSTANCE_ID placeholder not updated. Skipping RDS alarm setup.
+2025-10-12 20:23:47 SCRIPT FINISHED: Review logs for details.
+2025-10-12 20:23:47 --------------------------------------------------------
+2025-10-12 20:33:28 --------------------------------------------------------
+2025-10-12 20:33:28 STARTING SCRIPT: EC2 and RDS Alarm Setup
+2025-10-12 20:33:28 Region: us-east-1 | Target Topic: CDK-Buffer
+2025-10-12 20:33:28 1. Searching for SNS Topic: CDK-Buffer...
+2025-10-12 20:33:30 SUCCESS: Found Topic ARN: arn:aws:sns:us-east-1:592894503318:CDK-Buffer
+2025-10-12 20:33:30 2. EC2 Alarm: Checking for existing CPU alarm for i-01af26efe7ed5fa1b...
+2025-10-12 20:33:33    Alarm not found. Creating CloudWatch Metric Alarm: EC2-High-CPU-us-east-1-i-01af26efe7ed5fa1b...
+2025-10-12 20:33:36    SUCCESS: EC2 CPU Alarm created/updated successfully.
+2025-10-12 20:33:36 3. RDS Alarm: Checking for existing Storage alarm for appstack-rdsinstance6c916663-yieyweuwdwk4...
+2025-10-12 20:33:38    Alarm not found. Creating CloudWatch Metric Alarm: RDS-Low-Storage-us-east-1-appstack-rdsinstance6c916663-yieyweuwdwk4 (Threshold: 10 GB)...
+2025-10-12 20:33:41    SUCCESS: RDS Storage Alarm created/updated successfully.
+2025-10-12 20:33:41 SCRIPT FINISHED: Review logs for details.
+2025-10-12 20:33:41 --------------------------------------------------------

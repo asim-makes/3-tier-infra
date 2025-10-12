@@ -1,0 +1,27 @@
+2025-10-12 20:22:41 --------------------------------------------------------------------------------
+2025-10-12 20:22:41 STARTING SCRIPT: ALB Target Health Check
+2025-10-12 20:22:41 Target Region: -use-east-1
+2025-10-12 20:22:41 INFO: 'jq' found at: /usr/bin/jq
+2025-10-12 20:22:41 --- ALB Target Health Check: -use-east-1 ---
+2025-10-12 20:22:42 INFO: No Target Groups found in this region.
+2025-10-12 20:22:54 --------------------------------------------------------------------------------
+2025-10-12 20:22:54 STARTING SCRIPT: ALB Target Health Check
+2025-10-12 20:22:54 Target Region: -us-east-1
+2025-10-12 20:22:54 INFO: 'jq' found at: /usr/bin/jq
+2025-10-12 20:22:54 --- ALB Target Health Check: -us-east-1 ---
+2025-10-12 20:22:55 INFO: No Target Groups found in this region.
+2025-10-12 20:23:00 --------------------------------------------------------------------------------
+2025-10-12 20:23:00 STARTING SCRIPT: ALB Target Health Check
+2025-10-12 20:23:00 Target Region: -us-east-1a
+2025-10-12 20:23:00 INFO: 'jq' found at: /usr/bin/jq
+2025-10-12 20:23:00 --- ALB Target Health Check: -us-east-1a ---
+2025-10-12 20:23:01 INFO: No Target Groups found in this region.
+2025-10-12 20:23:04 --------------------------------------------------------------------------------
+2025-10-12 20:23:04 STARTING SCRIPT: ALB Target Health Check
+2025-10-12 20:23:04 Target Region: -us-east-1b
+2025-10-12 20:23:04 INFO: 'jq' found at: /usr/bin/jq
+2025-10-12 20:23:04 --- ALB Target Health Check: -us-east-1b ---
+2025-10-12 20:23:05 INFO: No Target Groups found in this region.
+2025-10-12 20:23:08 --------------------------------------------------------------------------------
+2025-10-12 20:23:08 STARTING SCRIPT: ALB Target Health Check
+2025-10-12 20:23:08 ERROR: --region is required.

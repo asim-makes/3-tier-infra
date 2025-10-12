@@ -112,16 +112,13 @@ class AppStack(Stack):
 
         # RDS Connectivity Script
         rds_check_script = f"""
-            cat << 'EOF' > /home/ec2-user/rds_connection_check.sh
+            cat << 'EOF' > ~/rds_connection_check.sh
             #!/bin/bash
             RDS_ENDPOINT="{rds_endpoint}"
             RDS_PORT="{rds_port}"
             LOG_FILE="/var/log/rds_connectivity.log"
 
             echo "Starting continuous connectivity check to \$RDS_ENDPOINT on port \$RDS_PORT..." > \$LOG_FILE
-
-            # Install 'dig' for DNS resolution check
-            yum install bind-utils -y
 
             while true; do
                 TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
@@ -141,7 +138,7 @@ class AppStack(Stack):
             done
             EOF
 
-            chmod +x /home/ec2-user/rds_check.sh
+            chmod +x ~/rds_check.sh
             """
         
         user_data.add_commands(rds_check_script)
